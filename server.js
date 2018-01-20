@@ -10,10 +10,9 @@ const PORT = process.env.PORT || 3000;
 const app = express();
 
 require('dotenv').config();
-//const conString = 'postgres://localhost:5432/my_media_db';
+// const conString = 'postgres://localhost:5432/my_media_db';
 const conString = 'postgres://postgres:GiGahurtZ42@mhzsys.net:20010/my_media_db';
-const IMG_URI = process.env.IMG_URI;
-const IMG_DEFAULT = process.env.IMG_DEFAULT;
+
 const api_key = process.env.api_key;
 
 const client = new pg.Client(conString);
