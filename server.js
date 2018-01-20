@@ -11,11 +11,11 @@ const app = express();
 
 require('dotenv').config();
 const conString = process.env.API_URL;
+
 const DETAIL = process.env.API_URL_DETAIL;
 const IMG_URI = process.env.IMG_URI;
 const IMG_DEFAULT = process.env.IMG_DEFAULT;
 const api_key = process.env.api_key;
-
 
 const client = new pg.Client(conString);
 client.connect();
