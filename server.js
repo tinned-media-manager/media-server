@@ -3,10 +3,11 @@
 const express = require('express');
 const fs = require('fs'); // remove if unnecessary
 const bodyParser = require('body-parser');
-const pg = require('pg');
+// const pg = require('pg');
 const cors = require('cors');
 const superAgent = require('superagent');
 const PORT = process.env.PORT || 3000;
+// const PORT = process.env.PORT || 3001;
 const app = express();
 
 require('dotenv').config();
@@ -17,8 +18,8 @@ const IMG_DEFAULT = process.env.IMG_DEFAULT;
 const api_key = process.env.api_key;
 
 
-const client = new pg.Client(conString);
-client.connect();
+// const client = new pg.Client(conString);
+// client.connect();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -30,7 +31,7 @@ app.get('/api/movies/popular', (req, res) => {
   superAgent.get(url_popular)
     .then(data => {
       let arrPopular = data.body.results.filter((movie, index) => {
-        if (index < 4) {return movie;}
+        if (index < 4) { return movie; }
       });
       res.send(arrPopular);
     }).catch(err => console.error(err));
@@ -42,7 +43,7 @@ app.get('/api/movies/recommend', (req, res) => {
   superAgent.get(url_recommend)
     .then(data => {
       let arrRecommend = data.body.results.filter((movie, index) => {
-        if (index < 4) {return movie;}
+        if (index < 4) { return movie; }
       });
       res.send(arrRecommend);
     })
@@ -59,6 +60,10 @@ app.get('/api/movies/one', (req, res) => {
       err => res.send(err);
     });
 });
+
+app.get('/ping', (req, res) => {
+  res.send('pong')
+})
 
 app.listen(PORT, () => {
   console.log(`server is listening on ${PORT}`);
