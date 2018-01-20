@@ -20,7 +20,7 @@ const client = new pg.Client(conString);
 client.connect();
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({extended:true}));
 app.use(cors());
 
 // gets the 4 most popular movies
@@ -29,7 +29,7 @@ app.get('/api/movies/popular', (req, res) => {
   superAgent.get(url_popular)
     .then(data => {
       let arrPopular = data.body.results.filter((movie, index) => {
-        if (index < 4) { return movie; }
+        if (index < 4) {return movie;}
       });
       res.send(arrPopular);
     }).catch(err => console.error(err));
@@ -41,7 +41,7 @@ app.get('/api/movies/recommend', (req, res) => {
   superAgent.get(url_recommend)
     .then(data => {
       let arrRecommend = data.body.results.filter((movie, index) => {
-        if (index < 4) { return movie; }
+        if (index < 4) {return movie;}
       });
       res.send(arrRecommend);
     })
