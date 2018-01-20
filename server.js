@@ -11,6 +11,11 @@ const app = express();
 
 require('dotenv').config();
 const conString = process.env.API_URL;
+const DETAIL = process.env.API_URL_DETAIL;
+const IMG_URI = process.env.IMG_URI;
+const IMG_DEFAULT = process.env.IMG_DEFAULT;
+const api_key = process.env.api_key;
+
 
 const DETAIL = process.env.API_URL_DETAIL;
 const IMG_URI = process.env.IMG_URI;
@@ -58,6 +63,16 @@ app.get('/api/movies/one', (req, res) => {
       res.send([data.body.title, data.body.overview, data.body.tagline, data.body.genres,]);
       err => res.send(err);
     });
+});
+
+// gets movies based on user search by title
+app.get('/api/movies/:title', (req, res) => {
+  let url_search = `https://api.themoviedb.org/3/search/movie?api_key=${api_key}&query=${req.params.title}`;
+  superAgent.get(url_search)
+    .then(data => {
+      res.send(data.body.results);
+    })
+    .catch(err => console.error(err));
 });
 
 app.listen(PORT, () => {
