@@ -19,14 +19,20 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cors());
 
-// gets all info from all popular movies
+// gets all info from all popular movies --> want to get the 4 most popular movies
 app.get('/', (req, res) => {
-  superAgent.get(conString)
+  let url_popular = `https://api.themoviedb.org/3/movie/popular?page=1&language=en-US&api_key=${process.env.api_key}`;
+  superAgent.get(url_popular)
     .then(data => {
-      console.log(data.body.results[0].title);
-      res.send(data.body.results[0].title);
-      err => res.send(err);
-    });
+      let arrPopular = data.body.results.sort(function(a, b) {
+        return b.popularity - a.popularity;
+      }).filter((movie, index) => {
+        if (index < 4) {return movie;}
+      });
+      res.send(arrPopular);
+      // console.log(data.body.results[0].title);
+      // res.send(data.body.results[0].title);
+    }).catch(err => console.error(err));
 });
 
 app.listen(PORT, () => {
