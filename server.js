@@ -26,7 +26,7 @@ app.use(cors());
 
 // gets the 4 most popular movies
 app.get('/api/movies/popular', (req, res) => {
-  let url_popular = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.api_key}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`;
+  let url_popular = `https://api.themoviedb.org/3/discover/movie?api_key=${api_key}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`;
   superAgent.get(url_popular)
     .then(data => {
       let arrPopular = data.body.results.filter((movie, index) => {
@@ -38,7 +38,7 @@ app.get('/api/movies/popular', (req, res) => {
 
 // gets 4 recommended movies
 app.get('/api/movies/recommend', (req, res) => {
-  let url_recommend = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.api_key}&language=en-US&sort_by=vote_count.desc&include_adult=false&include_video=false&page=1`;
+  let url_recommend = `https://api.themoviedb.org/3/discover/movie?api_key=${api_key}&language=en-US&sort_by=vote_count.desc&include_adult=false&include_video=false&page=1`;
   superAgent.get(url_recommend)
     .then(data => {
       let arrRecommend = data.body.results.filter((movie, index) => {
@@ -51,7 +51,7 @@ app.get('/api/movies/recommend', (req, res) => {
 
 // `${IMG_URI}${IMG_DEFAULT}${data.body.poster_path}">` this is the poster path figure out why this isnt working
 
-app.get('/one', (req, res) => {
+app.get('/api/movies/one', (req, res) => {
   superAgent.get(DETAIL)
     .then(data => {
       console.log(data.body.adult);
