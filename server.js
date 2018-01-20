@@ -104,6 +104,22 @@ app.post(`api/movies/create_user`, (req, res) => {
     .catch(err => console.error(err));
 });
 
+loadDB();
+
 app.listen(PORT, () => {
   console.log(`server is listening on ${PORT}`);
 });
+
+function loadDB() {
+  client.query(`
+    CREATE TABLE IF NOT EXISTS users(
+      id SERIAL PRIMARY KEY,
+      first_name TEXT NOT NULL,
+      last_name TEXT NOT NULL,
+      email VARCHAR(255) NOT NULL,
+      db_key VARCHAR(255) NOT NULL,
+      pwd VARCHAR(255) NOT NULL);`
+  )
+    .then()
+    .catch(err => console.error(err));
+}
