@@ -44,6 +44,18 @@ app.get('/api/movies/recommend', (req, res) => {
     .catch(err => console.error(err));
 });
 
+
+// `${IMG_URI}${IMG_DEFAULT}${data.body.poster_path}">` this is the poster path figure out why this isnt working
+
+app.get('/one', (req, res) => {
+  superAgent.get(DETAIL)
+    .then(data => {
+      console.log(data.body.adult);
+      res.send([data.body.title, data.body.overview, data.body.tagline, data.body.genres, ]);
+      err => res.send(err);
+    });
+});
+
 app.listen(PORT, () => {
   console.log(`server is listening on ${PORT}`);
 });
