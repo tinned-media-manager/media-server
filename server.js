@@ -11,7 +11,7 @@ const app = express();
 
 require('dotenv').config();
 const conString = process.env.API_URL;
-const DETAIL = process.env.API_URL_DETAIL;
+
 const IMG_URI = process.env.IMG_URI;
 const IMG_DEFAULT = process.env.IMG_DEFAULT;
 const api_key = process.env.api_key;
@@ -68,8 +68,8 @@ app.get('/api/movies/one/:id', (req, res) => {
   let detail_Url = `https://api.themoviedb.org/3/movie/${req.params.id}?api_key=${api_key}&append_to_response=videos,images`
   superAgent.get(detail_Url)
     .then(data => {
-      console.log(data.body.id);
-      res.send([data.body.title, data.body.overview, data.body.tagline, data.body.genres]);
+      console.log(data.body);
+      res.send(data.body);
       err => res.send(err);
     });
 });
