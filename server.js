@@ -11,6 +11,9 @@ const app = express();
 
 require('dotenv').config();
 const conString = process.env.API_URL;
+const DETAIL = process.env.API_URL_DETAIL;
+const IMG_URI = process.env.IMG_URI;
+const IMG_DEFAULT = process.env.IMG_DEFAULT;
 
 const client = new pg.Client(conString);
 client.connect();
@@ -43,7 +46,6 @@ app.get('/api/movies/recommend', (req, res) => {
     })
     .catch(err => console.error(err));
 });
-
 
 // `${IMG_URI}${IMG_DEFAULT}${data.body.poster_path}">` this is the poster path figure out why this isnt working
 
