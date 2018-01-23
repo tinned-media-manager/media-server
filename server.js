@@ -10,10 +10,9 @@ const PORT = process.env.PORT || 3000;
 const app = express();
 
 require('dotenv').config();
-//const conString = 'postgres://localhost:5432/my_media_db';
-const conString = 'postgres://postgres:GiGahurtZ42@mhzsys.net:20010/my_media_db';
-const IMG_URI = process.env.IMG_URI;
-const IMG_DEFAULT = process.env.IMG_DEFAULT;
+const conString = 'postgres://localhost:5432/my_media_db';
+// const conString = 'postgres://postgres:GiGahurtZ42@mhzsys.net:20010/my_media_db';
+
 const api_key = process.env.api_key;
 
 const client = new pg.Client(conString);
@@ -69,18 +68,6 @@ app.get('/api/movies/one/:id', (req, res) => {
   superAgent.get(detail_Url)
     .then(data => {
       console.log(data.body.id);
-      res.send([data.body.title, data.body.overview, data.body.tagline, data.body.genres]);
-      err => res.send(err);
-    });
-});
-
-//remember to make the get one grab the id from the movie we click on right now it is hardcoded for one movie.
-
-app.get('/api/movies/one/:id', (req, res) => {
-  let detail_Url = `https://api.themoviedb.org/3/movie/${req.params.id}?api_key=${api_key}&append_to_response=videos,images`
-  superAgent.get(detail_Url)
-    .then(data => {
-      console.log(data.body);
       res.send(data.body);
     })
     .catch(err => console.error(err));
