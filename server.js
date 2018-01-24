@@ -62,6 +62,7 @@ app.get('/api/movies/:title', (req, res) => {
     })
     .catch(err => console.error(err));
 });
+
 //remember to make the get one grab the id from the movie we click on right now it is hardcoded for one movie.
 
 app.get('/api/movies/one/:id', (req, res) => {
@@ -69,18 +70,6 @@ app.get('/api/movies/one/:id', (req, res) => {
   superAgent.get(detail_Url)
     .then(data => {
       console.log(data.body.id);
-      res.send([data.body.title, data.body.overview, data.body.tagline, data.body.genres]);
-      err => res.send(err);
-    });
-});
-
-//remember to make the get one grab the id from the movie we click on right now it is hardcoded for one movie.
-
-app.get('/api/movies/one/:id', (req, res) => {
-  let detail_Url = `https://api.themoviedb.org/3/movie/${req.params.id}?api_key=${api_key}&append_to_response=videos,images`
-  superAgent.get(detail_Url)
-    .then(data => {
-      console.log(data.body);
       res.send(data.body);
     })
     .catch(err => console.error(err));
