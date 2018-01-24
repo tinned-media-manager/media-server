@@ -28,9 +28,17 @@ app.get('/api/movies/popular', (req, res) => {
   superAgent.get(url_popular)
     .then(data => {
       let arrPopular = data.body.results.filter((movie, index) => {
-        if (index < 4) {return movie;}
+        if (index < 20) {return movie;}
       });
-      res.send(arrPopular);
+      let randArr = [];
+      for(var i = 0; i < 4; i++) {
+        let rand = Math.floor((Math.random() * 19) + 1);
+        if (!randArr.includes(arrPopular[rand])) {randArr.push(arrPopular[rand]);}
+        else {
+          randArr.push(arrPopular[Math.floor((Math.random() * 19) + 1)]);
+        }
+      }
+      res.send(randArr);
     }).catch(err => console.error(err));
 });
 
@@ -40,16 +48,22 @@ app.get('/api/movies/recommend', (req, res) => {
   superAgent.get(url_recommend)
     .then(data => {
       let arrRecommend = data.body.results.filter((movie, index) => {
-        if (index < 4) {return movie;}
+        if (index < 20) {return movie;}
       });
-      res.send(arrRecommend);
+      let randArr = [];
+      for(var i = 0; i < 4; i++) {
+        let rand = Math.floor((Math.random() * 19) + 1);
+        if(!randArr.includes(arrRecommend[rand])) {randArr.push(arrRecommend[rand]);}
+        else {
+          randArr.push(arrRecommend[Math.floor((Math.random() * 19) + 1)]);
+        }
+      }
+      res.send(randArr);
     })
     .catch(err => console.error(err));
 });
 
 // `${IMG_URI}${IMG_DEFAULT}${data.body.poster_path}">` this is the poster path figure out why this isnt working
-
-
 
 // gets movies based on user search by title
 app.get('/api/movies/:title', (req, res) => {
@@ -83,7 +97,7 @@ app.get('/api/movies/related/:id', (req, res) => {
     .catch(err => console.error(err));
 });
 
-app.post(`api/movies/create_user`, (req, res) => {
+app.post(`/movies/create_user`, (req, res) => {
   client.query(`
     INSERT INTO users(first_name, last_name, email, db_key, pwd)
     VALUES($1, $2, $3, $4, $5) ON CONFLICT DO NOTHING;`,
