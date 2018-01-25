@@ -87,6 +87,16 @@ app.get('/api/movies/one/:id', (req, res) => {
     .catch(err => console.error(err));
 });
 
+app.get('/api/movies/related/:id', (req, res) => {
+  let detail_Url = `https://api.themoviedb.org/3/movie/${req.params.id}?api_key=${api_key}&append_to_response=videos,images`
+  superAgent.get(detail_Url)
+    .then(data => {
+      console.log(data.body.id);
+      res.send(data.body);
+    })
+    .catch(err => console.error(err));
+});
+
 app.post('/user', (req, res) => {
   client.query(`
     INSERT INTO users(first_name, last_name, email, db_key, pwd)
