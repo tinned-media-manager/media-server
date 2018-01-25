@@ -87,7 +87,7 @@ app.get('/api/movies/one/:id', (req, res) => {
     .catch(err => console.error(err));
 });
 
-app.post(`/movies/create_user`, (req, res) => {
+app.post('/user', (req, res) => {
   client.query(`
     INSERT INTO users(first_name, last_name, email, db_key, pwd)
     VALUES($1, $2, $3, $4, $5) ON CONFLICT DO NOTHING;`,
@@ -98,10 +98,6 @@ app.post(`/movies/create_user`, (req, res) => {
       req.body.db_key,
       req.body.pwd
     ])
-    .then(result => {
-      console.log(result.rows[0]);
-      res.send('New user created!');
-    })
     .catch(err => console.error(err));
 });
 
