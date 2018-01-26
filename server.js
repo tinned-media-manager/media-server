@@ -97,7 +97,7 @@ app.get('/api/movies/related/:id', (req, res) => {
     .catch(err => console.error(err));
 });
 
-app.post(`/movies/create_user`, (req, res) => {
+app.post(`/user`, (req, res) => {
   client.query(`
     INSERT INTO users(first_name, last_name, email, db_key, pwd)
     VALUES($1, $2, $3, $4, $5) ON CONFLICT DO NOTHING;`,
