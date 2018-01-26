@@ -1,7 +1,7 @@
 'use strict';
 
 const express = require('express');
-const fs = require('fs'); // remove if unnecessary
+const fs = require('fs'); 
 const bodyParser = require('body-parser');
 const pg = require('pg');
 const cors = require('cors');
@@ -10,8 +10,8 @@ const PORT = process.env.PORT || 3000;
 const app = express();
 
 require('dotenv').config();
-const conString = 'postgres://localhost:5432/my_media_db';
-// const conString = 'postgres://postgres:GiGahurtZ42@mhzsys.net:20010/my_media_db';
+// const conString = 'postgres://localhost:5432/my_media_db';
+const conString = 'postgres://postgres:GiGahurtZ42@mhzsys.net:20010/my_media_db';
 
 const api_key = process.env.api_key;
 
@@ -63,7 +63,7 @@ app.get('/api/movies/recommend', (req, res) => {
     .catch(err => console.error(err));
 });
 
-// `${IMG_URI}${IMG_DEFAULT}${data.body.poster_path}">` this is the poster path figure out why this isnt working
+
 
 // gets movies based on user search by title
 app.get('/api/movies/:title', (req, res) => {
@@ -75,7 +75,7 @@ app.get('/api/movies/:title', (req, res) => {
     })
     .catch(err => console.error(err));
 });
-//remember to make the get one grab the id from the movie we click on right now it is hardcoded for one movie.
+
 
 app.get('/api/movies/one/:id', (req, res) => {
   let detail_Url = `https://api.themoviedb.org/3/movie/${req.params.id}?api_key=${api_key}&append_to_response=videos,images`
@@ -97,7 +97,7 @@ app.get('/api/movies/related/:id', (req, res) => {
     .catch(err => console.error(err));
 });
 
-app.post(`/user`, (req, res) => {
+app.post('/user', (req, res) => {
   client.query(`
     INSERT INTO users(first_name, last_name, email, db_key, pwd)
     VALUES($1, $2, $3, $4, $5) ON CONFLICT DO NOTHING;`,
@@ -108,10 +108,6 @@ app.post(`/user`, (req, res) => {
       req.body.db_key,
       req.body.pwd
     ])
-    .then(result => {
-      console.log(result.rows[0]);
-      res.send('New user created!');
-    })
     .catch(err => console.error(err));
 });
 
